@@ -24,9 +24,32 @@ function signUp() {
   });
 }
 
+async function pushValueToDB() {
+  let input = document.getElementById('input-send-message');
+  if (input.value != "") {
+    const date = new Date();
+    const hour = date.getHours().toLocaleString();
+    const minute = date.getMinutes().toLocaleString();
+
+    const docRef = await addDoc(collection(db, 'message'), {
+      message: input.value,
+      name: user.displayName,
+      timestamp: `${hour}:${minute}`
+    });
+
+    input.value = "";
+
+    updateMessages();
+  }
+}
+
+document.getElementById('btn-send-message').addEventListener('click', () => {
+  pushValueToDB();
+});
+
 onAuthStateChanged(auth, (authUser) => {
   user = authUser;
-  
+
   if (authUser) {
     ReactDOM.createRoot(document.getElementById('nav-buttons')).render(
       <React.StrictMode>
@@ -37,25 +60,6 @@ onAuthStateChanged(auth, (authUser) => {
     document.getElementById('input-sect').childNodes.forEach(node => {
       if (node.nodeType === 1) {
         node.removeAttribute('disabled');
-      }
-    });
-
-    document.getElementById('btn-send-message').addEventListener('click', async () => {
-      let input = document.getElementById('input-send-message');
-      if (input.value != "") {
-        const date = new Date();
-        const hour = date.getHours().toLocaleString();
-        const minute = date.getMinutes().toLocaleString();
-
-        const docRef = await addDoc(collection(db, 'message'), {
-          message: input.value,
-          name: user.displayName,
-          timestamp: `${hour}:${minute}`
-        });
-
-        input.value = "";
-        
-        updateMessages();
       }
     });
   } else {

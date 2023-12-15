@@ -8,7 +8,7 @@ function Message(props) {
   const alignValue = isCurrentUser ? 'right' : 'left';
 
   return (
-    <section className={`card container p-3 m-0 has-background-grey-lighter align-${alignValue}`}>
+    <section style={{height: 'fit-content'}} className={`card container p-3 m-0 has-background-grey-lighter align-${alignValue}`}>
       <label className="label">{props.message}</label>
       <section className="container">
         <label className="label is-small">{props.timeStamp} - {props.username}</label>
@@ -18,7 +18,7 @@ function Message(props) {
 }
 
 async function getMessages() {
-  const messagesCollection = collection(db, 'message');
+  const messagesCollection = collection(db, 'message').orderBy("timestamp", desc);
 
   try {
     const querySnapshot = await getDocs(messagesCollection);
@@ -42,8 +42,6 @@ function App({ user }) {
 
     fetchMessages();
   }, []);
-
-  console.log(messages);
 
   return (
     <>
