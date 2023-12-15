@@ -1,0 +1,46 @@
+.is-grid {
+    display: grid;
+}
+
+.overflow-auto {
+    overflow: auto;
+}
+
+.align-left {
+    justify-self: left;
+}
+
+.align-right {
+    justify-self: right;
+}
+
+.g-0 {
+    gap: 0;
+}
+
+.g-1 {
+    gap: 0.3em;
+}
+
+.g-2 {
+    gap: 0.6em;
+}
+
+.g-3 {
+    gap: 1em;
+}
+
+.top {
+    position: relative;
+    top: 0;
+}
+
+.page-container {
+    overflow: hidden;
+    display: grid;
+    height: 92vh;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
